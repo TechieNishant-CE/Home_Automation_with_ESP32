@@ -33,8 +33,8 @@ const char* RELAY_NAMES[4] = { "Bulb", "Socket", "Fan", "Multiplug" };
 #define RELAY_ACTIVE_LOW true
 /* ============================ 2. CONFIGURATION ======================= */
 // WiFi Credentials
-const char* WIFI_SSID     = "Dept";
-const char* WIFI_PASSWORD = "12345678999";
+const char* WIFI_SSID     = "SSID_name";
+const char* WIFI_PASSWORD = "SSID_password";
 // Web Server instance listening on Port 80
 WebServer server(80);
 /* ============================ 3. GLOBAL OBJECTS ======================= */
