@@ -1,20 +1,14 @@
-/* =====================================================================
-   HOME AUTOMATION SYSTEM  -  ESP32 30-Pin Board (Final Defense)
-   =====================================================================
+/* 
+   ADVANCED HOME AUTOMATION SYSTEM  -  ESP32 30-Pin Board
+  
    Modes of Control:
-     1) SENSOR CONTROL    -> DHT22 auto-turns Fan (Relay 3) ON/OFF based on threshold
-     2) DASHBOARD CONTROL -> Pure HTML/CSS web dashboard (no JS, mobile-responsive)
+     1) VOICE CONTROL     
+                          
+     2) SENSOR CONTROL    
+     3) DASHBOARD CONTROL 
      
-   Feedback:
-     - 1602 LCD via HW-061 I2C interface backpack (SDA=21, SCL=22)
-       Displays Temp, Humidity, and Relay states in rotation.
-
-   NOTE ON WI-FI CREDENTIALS:
-     Never commit real Wi-Fi credentials to a public repo. Fill in
-     WIFI_SSID / WIFI_PASSWORD below locally before flashing, and keep
-     that edit uncommitted (or move it into a gitignored secrets.h).
-     
-   ===================================================================== */
+       
+   */
 #include <WiFi.h>
 #include <WebServer.h>
 #include <DHT.h>
@@ -27,28 +21,24 @@
 // ---- 1602 LCD with HW-061 I2C Adapter ----
 #define I2C_SDA_PIN 21
 #define I2C_SCL_PIN 22
-#define LCD_I2C_ADDR 0x27  // Default address. Try 0x3F if LCD shows nothing.
-// ---- 4-Channel Relay Module (AC Appliance Control) ----
-#define RELAY1_PIN 16   // Relay 1: Bulb
-#define RELAY2_PIN 17   // Relay 2: Socket
-#define RELAY3_PIN 18   // Relay 3: Fan (Auto-controlled by DHT22)
-#define RELAY4_PIN 19   // Relay 4: Multi-plug
+#define LCD_I2C_ADDR 0x27   // LCD I2C Address
+#define RELAY1_PIN 16   // bulb
+#define RELAY2_PIN 17   // socket
+#define RELAY3_PIN 18   // Fan (Auto-controlled by DHT22)
+#define RELAY4_PIN 19   // multiplug
 const int RELAY_PINS[4] = { RELAY1_PIN, RELAY2_PIN, RELAY3_PIN, RELAY4_PIN };
-const char* RELAY_NAMES[4] = { "Bulb", "Socket", "Fan", "Multi-plug" };
-#define FAN_INDEX 2     // Array index of the Fan
-// ---- Relay Active Level Configuration ----
-// Most relay boards use Active LOW logic. Set this to true if yours is Active LOW.
-// Set to false if your relay board turns ON when receiving a HIGH signal.
+const char* RELAY_NAMES[4] = { "Bulb", "Socket", "Fan", "Multiplug" };
+#define FAN_INDEX 2     
+
 #define RELAY_ACTIVE_LOW true
 /* ============================ 2. CONFIGURATION ======================= */
 // WiFi Credentials
-const char* WIFI_SSID     = "YOUR_WIFI_NAME";
-const char* WIFI_PASSWORD = "YOUR_WIFI_PASSWORD";
+const char* WIFI_SSID     = "Dept";
+const char* WIFI_PASSWORD = "12345678999";
 // Web Server instance listening on Port 80
 WebServer server(80);
 /* ============================ 3. GLOBAL OBJECTS ======================= */
 DHT dht(DHT_PIN, DHT_TYPE);
-// 16 characters, 2 lines LCD configuration
 LiquidCrystal_I2C lcd(LCD_I2C_ADDR, 16, 2);
 /* ============================ 4. GLOBAL STATE ========================= */
 bool  relayState[4]   = { false, false, false, false };
@@ -78,7 +68,7 @@ String buildDashboardHTML();
 /* ============================ 6. SETUP / LOOP ========================= */
 void setup() {
   Serial.begin(115200);
-  Serial.println("\nInitializing Simplified Smart Home System...");
+  Serial.println("\nInitializing Advanced Smart Home System...");
   // Initialize I2C Bus on default ESP32 pins
   Wire.begin(I2C_SDA_PIN, I2C_SCL_PIN);
   initPins();
@@ -89,7 +79,7 @@ void setup() {
   lcd.clear();
   lcd.print("System Ready");
   Serial.println("System fully loaded and operational.");
-  delay(1500);
+  delay(1000);
 }
 void loop() {
   server.handleClient();       // Listen for web requests
@@ -102,7 +92,7 @@ void loop() {
   }
   updateLCD();                 // Rotate and update LCD screens
 }
-/* ============================ 7. INITIALIZATION ======================= */
+/* = 7. INITIALIZATION */
 void initPins() {
   // Set Relay pins as output and set default state (OFF)
   for (int i = 0; i < 4; i++) {
@@ -144,7 +134,7 @@ void initWiFi() {
     lcd.setCursor(0, 1);
     lcd.print(WiFi.localIP().toString());
   } else {
-    Serial.println("\nWiFi Connection Failed! Dashboard will be unavailable.");
+    Serial.println("\nWiFi Connection Failed! Running in Offline Mode.");
     lcd.clear();
     lcd.print("WiFi Conn Failed");
     lcd.setCursor(0, 1);
@@ -173,8 +163,7 @@ void readDHT22Sensor() {
   }
 }
 void autoFanControl() {
-  if (!fanAutoMode) return; // Skip if dashboard disabled auto mode
-  // Automatically triggers Fan (RELAY3) based on the temperature threshold
+  if (!fanAutoMode) return; 
   if (currentTemp >= tempThreshold && !relayState[FAN_INDEX]) {
     setRelay(FAN_INDEX, true);
     Serial.println("Auto mode: Fan turned ON (Threshold reached)");
@@ -222,19 +211,18 @@ void updateLCD() {
     lcd.print(fanAutoMode ? "A" : "M");
   } else {
     // Page 1: Relay Status indicators
-    // Abbreviations: Blb (Bulb), Skt (Socket), Fan (Fan), Mpl (Multi-plug)
-    lcd.print("Blb:");
+    lcd.print("B:");
     lcd.print(relayState[0] ? "ON " : "OFF");
-    lcd.print(" Skt:");
+    lcd.print(" SKT:");
     lcd.print(relayState[1] ? "ON " : "OFF");
     lcd.setCursor(0, 1);
     lcd.print("Fan:");
     lcd.print(relayState[2] ? "ON " : "OFF");
-    lcd.print(" Mpl:");
+    lcd.print(" Mp:");
     lcd.print(relayState[3] ? "ON " : "OFF");
   }
 }
-/* ============================ 11. WEB DASHBOARD ROUTING ================ */
+/* ============================ 13. WEB DASHBOARD ROUTING ================ */
 void handleRoot() {
   server.send(200, "text/html", buildDashboardHTML());
 }
