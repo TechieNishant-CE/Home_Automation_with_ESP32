@@ -1,5 +1,5 @@
 /* =====================================================================
-   HOME AUTOMATION SYSTEM  -  ESP32 30-Pin Board
+   HOME AUTOMATION SYSTEM  -  ESP32 30-Pin Board (Final Defense)
    =====================================================================
    Modes of Control:
      1) SENSOR CONTROL    -> DHT22 auto-turns Fan (Relay 3) ON/OFF based on threshold
@@ -8,6 +8,11 @@
    Feedback:
      - 1602 LCD via HW-061 I2C interface backpack (SDA=21, SCL=22)
        Displays Temp, Humidity, and Relay states in rotation.
+
+   NOTE ON WI-FI CREDENTIALS:
+     Never commit real Wi-Fi credentials to a public repo. Fill in
+     WIFI_SSID / WIFI_PASSWORD below locally before flashing, and keep
+     that edit uncommitted (or move it into a gitignored secrets.h).
      
    ===================================================================== */
 #include <WiFi.h>
@@ -24,12 +29,12 @@
 #define I2C_SCL_PIN 22
 #define LCD_I2C_ADDR 0x27  // Default address. Try 0x3F if LCD shows nothing.
 // ---- 4-Channel Relay Module (AC Appliance Control) ----
-#define RELAY1_PIN 16   // Light 1
-#define RELAY2_PIN 17   // Light 2
-#define RELAY3_PIN 18   // Fan (Auto-controlled by DHT22)
-#define RELAY4_PIN 19   // Socket
+#define RELAY1_PIN 16   // Relay 1: Bulb
+#define RELAY2_PIN 17   // Relay 2: Socket
+#define RELAY3_PIN 18   // Relay 3: Fan (Auto-controlled by DHT22)
+#define RELAY4_PIN 19   // Relay 4: Multi-plug
 const int RELAY_PINS[4] = { RELAY1_PIN, RELAY2_PIN, RELAY3_PIN, RELAY4_PIN };
-const char* RELAY_NAMES[4] = { "Light 1", "Light 2", "Fan", "Socket" };
+const char* RELAY_NAMES[4] = { "Bulb", "Socket", "Fan", "Multi-plug" };
 #define FAN_INDEX 2     // Array index of the Fan
 // ---- Relay Active Level Configuration ----
 // Most relay boards use Active LOW logic. Set this to true if yours is Active LOW.
@@ -217,14 +222,15 @@ void updateLCD() {
     lcd.print(fanAutoMode ? "A" : "M");
   } else {
     // Page 1: Relay Status indicators
-    lcd.print("L1:");
+    // Abbreviations: Blb (Bulb), Skt (Socket), Fan (Fan), Mpl (Multi-plug)
+    lcd.print("Blb:");
     lcd.print(relayState[0] ? "ON " : "OFF");
-    lcd.print(" L2:");
+    lcd.print(" Skt:");
     lcd.print(relayState[1] ? "ON " : "OFF");
     lcd.setCursor(0, 1);
     lcd.print("Fan:");
     lcd.print(relayState[2] ? "ON " : "OFF");
-    lcd.print(" Skt:");
+    lcd.print(" Mpl:");
     lcd.print(relayState[3] ? "ON " : "OFF");
   }
 }

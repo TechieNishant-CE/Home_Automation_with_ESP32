@@ -28,13 +28,19 @@ Built as a Year I / Semester II project for the Department of Computer Science a
 
 | Signal | GPIO |
 |---|---|
-| Relay 1 — Light 1 | 16 |
-| Relay 2 — Light 2 | 17 |
+| Relay 1 — Bulb | 16 |
+| Relay 2 — Socket | 17 |
 | Relay 3 — Fan (auto) | 18 |
-| Relay 4 — Socket | 19 |
+| Relay 4 — Multi-plug | 19 |
 | DHT22 data | 4 |
 | I2C SDA (LCD) | 21 |
 | I2C SCL (LCD) | 22 |
+
+## Documentation
+
+- 📄 [Full Project Report](docs/IoT_Home_Automation_Report.pdf) — background, methodology, testing, ER diagram, budget, and references
+- 📊 [Defense Presentation](docs/IoT_Home_Automation_Presentation.pptx)
+- 🖼️ [System Architecture Diagram](docs/system-architecture.png)
 
 ## Getting Started
 
