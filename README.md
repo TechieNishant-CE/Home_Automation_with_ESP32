@@ -46,7 +46,7 @@ Built as a Year I / Semester II project for the Department of Computer Science a
 
 1. Install the Arduino IDE and add the [ESP32 board package](https://docs.espressif.com/projects/arduino-esp32/en/latest/).
 2. Install libraries: `WiFi`, `WebServer`, `DHT sensor library` (Adafruit), `Wire`, `LiquidCrystal_I2C`.
-3. Open [`firmware/home_automation.ino`](firmware/home_automation.ino) and set your Wi-Fi credentials:
+3. Open [`firmware/iot-home-automation-repo.ino`](firmware/iot-home-automation-repo.ino) and set your Wi-Fi credentials:
    ```cpp
    const char* WIFI_SSID     = "YOUR_WIFI_NAME";
    const char* WIFI_PASSWORD = "YOUR_WIFI_PASSWORD";
