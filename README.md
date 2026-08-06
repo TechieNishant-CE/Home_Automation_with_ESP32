@@ -4,7 +4,7 @@ A self-hosted home automation system built around the **ESP32**. Controls four h
 
 Built as a Year I / Semester II project for the Department of Computer Science and Engineering, Kathmandu University.
 
-![System Architecture](docs/system-architecture.png)
+![System Architecture](docs/System-Architecture.png)
 
 ## Features
 
@@ -39,8 +39,8 @@ Built as a Year I / Semester II project for the Department of Computer Science a
 ## Documentation
 
 - 📄 [Full Project Report](docs/IoT_Home_Automation_Report.pdf) — background, methodology, testing, ER diagram, budget, and references
-- 📊 [Defense Presentation](docs/IoT_Home_Automation_Presentation.pptx)
-- 🖼️ [System Architecture Diagram](docs/system-architecture.png)
+- - 📊 [Defense Presentation](docs/IoT_Home_Automation_Presentation_final-defence.pptx)
+- 🖼️ [System Architecture Diagram](docs/System-Architecture.png)
 
 ## Getting Started
 
@@ -57,7 +57,7 @@ Built as a Year I / Semester II project for the Department of Computer Science a
 
 ## System Architecture
 
-The ESP32 sits at the center, bridging the user's browser, the relay-controlled appliances, and the DHT22 sensor — all over the home Wi-Fi network, with no cloud involved. See [`docs/system-architecture.png`](docs/system-architecture.png) for the full diagram.
+The ESP32 sits at the center, bridging the user's browser, the relay-controlled appliances, and the DHT22 sensor — all over the home Wi-Fi network, with no cloud involved. See [`docs/System-Architecture.png`](docs/System-Architecture.png) for the full diagram.
 
 ## Project Team
 
