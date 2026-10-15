@@ -39,7 +39,7 @@ Built as a Year I / Semester II project for the Department of Computer Science a
 ## Documentation
 
 - 📄 [Full Project Report](docs/IoT_Home_Automation_Report.pdf) — background, methodology, testing, ER diagram, budget, and references
-- - 📊 [Defense Presentation](docs/IoT_Home_Automation_Presentation_final-defence.pptx)
+- 📊 [Defense Presentation](docs/IoT_Home_Automation_Presentation_final-defence.pptx)
 - 🖼️ [System Architecture Diagram](docs/System-Architecture.png)
 
 ## Getting Started
